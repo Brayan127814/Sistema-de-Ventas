@@ -8,11 +8,14 @@ import productos from './Backend/Models/productos.models.mjs'
 import ventas from './Backend/Models/ventas.models.venta.mjs'
 
 import './Backend/Models/index.mjs'
+import authRoute from './Backend/Routes/authRoute.mjs'
 
 
 const app = exress()
 app.use(exress.json())
 
+
+app.use('/usuarios',authRoute)
 
 
 //Montar el servidor
@@ -26,7 +29,7 @@ const init = async ()=>{
             )
 
             console.log('Conexion succebol')
-            app.use(PORT,()=>{
+            app.listen(PORT,()=>{
                 console.log('app corriendo en el servidor ' , PORT)
             })
     }catch(error){

@@ -4,6 +4,8 @@ import validateFields from "../utils/validarCampos.mjs";
 import isPassworSecure from "../utils/passwordSecure.mjs";
 import authRepository from "../Repositories/authRepositories.mjs";
 import isValidCredentials from "../utils/isLogin.mjs";
+
+
 class AuthService {
     static async createUser({ data, arrayData }) {
         try {
@@ -88,7 +90,7 @@ class AuthService {
                 message: "Inicio de sesión exitoso",
                 token,
                 success: true,
-                status:200
+                status: 200
             }
 
 
@@ -101,6 +103,92 @@ class AuthService {
 
         }
     }
+
+    //Obtener todos datos de los empleados
+    static async obtenerEmpledos(userID) {
+
+        try {
+            console.log('id del usuario', userID)
+            if (!userID) {
+                return {
+                    message: 'Ingresa al sistema',
+                    status: 401
+                }
+            }
+
+            const empleados = await authRepository.obtenerUsuariosConRolEmpleado()
+            return {
+
+                message: 'Usuarios registrados en la base de datos',
+                data: empleados,
+                status: 200,
+
+            }
+        } catch (error) {
+
+
+            return {
+                message: 'Error al buscar la lista de usuarios',
+                error: error
+            }
+
+        }
+
+    }
+
+
+
+
+    // Actualizar el estado de un usuario
+    static async updateState(idUser, updateID) {
+        try {
+            if (!idUser) {
+                return {
+                    message: 'Ingresa al sistema',
+                    status: 401
+                };
+            }
+
+            const resultado = await authRepository.updateState(updateID);
+            return resultado;
+
+        } catch (error) {
+            console.error('Error en updateState:', error);
+            return {
+                message: 'Error del servidor',
+                status: 500
+            };
+        }
+    }
+
+    //Obetener el perfil de un usuario en especifico
+
+
+    static async getUserProfile(userID) {
+        try {
+            if (!userID) {
+                return {
+                    message: 'Ingresa al sistema',
+                    status: 401
+                };
+            }
+
+            const userProfile = await authRepository.getUserByID(userID)
+
+            return {
+                message:'Perfil de usuario',
+                data:userProfile,
+                status:200
+            }
+
+        } catch (error) {
+            return {
+                message: "Error al obtener el perfil",
+                status: 500
+            };
+        }
+    }
 }
+
 
 export default AuthService

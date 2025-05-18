@@ -26,8 +26,8 @@ const productos = connect.define("productos",
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        categoria: {
-            type: DataTypes.STRING,
+        categoriaID: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         imgProducto: {

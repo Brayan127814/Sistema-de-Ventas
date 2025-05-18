@@ -84,11 +84,11 @@ Estas funcionalidades están centralizadas en la clase `AuthService`.
 
 
 
-. Inicio de sesión
-***URL***: http://localhost:5000/usuarios/login
-Método: POST
-Headers: Content-Type: application/json
-Body (JSON):
+#### Inicio de sesión
+-**URL: ** http://localhost:5000/usuarios/login
+ - **Método:** POST
+ - **Headers:** Content-Type: application/json
+-  **Body (JSON):**
 
 
 {
@@ -100,4 +100,85 @@ Respuesta exitosa
   "message": "Inicio de sesión exitoso",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "success": true
+}
+
+# 🛒 Sistema de Ventas - API
+
+## Endpoints
+
+---
+
+### Consulta de perfil de usuario
+
+- **URL:** `http://localhost:5000/usuarios/profile`  
+- **Método:** `GET`  
+- **Descripción:** Obtiene el perfil del usuario que está autenticado.
+
+**Respuesta exitosa:**
+
+```json
+{
+  "message": "Perfil de usuario",
+  "data": {
+    "id": 1,
+    "nombre": "Brayan Castillo",
+    "cedula": "1007515804",
+    "email": "jesus@gmail.com",
+    "estado": "Activo",
+    "rolID": 1,
+    "createdAt": "2025-05-18T20:23:33.000Z",
+    "updatedAt": "2025-05-18T20:23:33.000Z",
+    "rol": {
+      "roleName": "admin"
+    }
+  },
+  "error": null
+}
+
+
+# Modulo para el registro de Productos
+
+- Validacion de campos para que no se pasen valores vacíos
+- En este modulo hará
+- Registro de producto
+- Listar todos los productos
+- listar por categorias 
+- Actualizar productos
+
+
+## Registro de pruducots
+- **URL:** `http://localhost:5000/productos/create`
+- **Método:** `POST`
+- **Descripción:** Solo los usuarios con rol de **admin** pueden insertar un producto.
+
+
+```json
+
+{
+  "nombre": "Auriculares Inalámbricos Bluetooth",
+  "descripcion": "Auriculares con cancelación de ruido, micrófono incorporado y estuche de carga.",
+  "precio": 59.99,
+  "cantidad_en_stock": 120,
+  "categoriaID": 1,
+  "imgProducto": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXVyaWN1bGFyZXMlMjBpbmFsYW1icmljb3N8ZW58MHx8MHx8fDA%3D"
+}
+
+**Respuesta exitosa:**
+
+```json
+
+{
+    "message": "✅ Producto registrado correctamente.",
+    "data": {
+        "id": 1,
+        "nombre": "Auriculares Inalámbricos Bluetooth",
+        "descripcion": "Auriculares con cancelación de ruido, micrófono incorporado y estuche de carga.",
+        "precio": 59.99,
+        "cantidad_en_stock": 120,
+        "categoriaID": 1,
+        "imgProducto": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXVyaWN1bGFyZXMlMjBpbmFsYW1icmljb3N8ZW58MHx8MHx8fDA%3D",
+        "updatedAt": "2025-05-18T21:20:33.614Z",
+        "createdAt": "2025-05-18T21:20:33.614Z"
+    },
+    "error": null
 }

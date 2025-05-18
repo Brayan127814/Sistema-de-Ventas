@@ -3,6 +3,7 @@ import usuarios from "./usuarios.models.mjs";
 import detalle_de_ventas from "./detalleVentas.mjs";
 import ventas from "./ventas.models.venta.mjs";
 import productos from "./productos.models.mjs";
+import categoria from "./categoria.model.mjs";
 
 /*
  Un rol puede tener muchos usuarios
@@ -67,3 +68,12 @@ ventas.hasMany(detalle_de_ventas, {
 productos.hasMany(detalle_de_ventas, {
     foreignKey: "id_producto"
 });
+
+
+//
+categoria.hasMany(productos,{
+    foreignKey:"categoriaID"
+})
+productos.belongsTo(categoria,{
+        foreignKey:'categoriaID'
+})

@@ -1,0 +1,76 @@
+/* Estructura principal del sidebar */
+.sidebar-container {
+  width: 250px;
+  height: 100vh;
+  background-color: #2c5282; /* Mismo color que el header pero un tono más oscuro */
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding-top: 70px; /* Para que no quede detrás del header */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 800;
+}
+
+/* Cabecera del sidebar */
+.sidebar-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #ebf4ff;
+  font-weight: 500;
+}
+
+/* Navegación */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+/* Enlaces del menú */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  color: #ebf4ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin: 0.2rem 0;
+}
+
+.sidebar-link:hover {
+  background-color: #2b6cb0; /* Color intermedio entre el sidebar y el header */
+  color: white;
+}
+
+.sidebar-link.active {
+  background-color: #2b6cb0;
+  border-left: 4px solid #ebf4ff;
+}
+
+/* Iconos y texto */
+.link-icon {
+  margin-right: 12px;
+  font-size: 1.1rem;
+}
+
+.link-text {
+  font-size: 0.95rem;
+}
+
+/* Efecto para móviles */
+@media (max-width: 768px) {
+  .sidebar-container {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar-container.open {
+    transform: translateX(0);
+  }
+}

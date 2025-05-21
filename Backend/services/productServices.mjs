@@ -46,6 +46,60 @@ class ProductsService {
       };
     }
   }
+
+  static async getCategoriaByID(userID, categoriaID) {
+
+    try {
+      if (!userID) {
+        return {
+          message: "⛔ Acceso denegado: debe iniciar sesión para registrar productos.",
+          status: 401
+        }
+
+      }
+      const products = await ProductRepository.getProductsByCategory(categoriaID)
+      return {
+        message: 'Producto encontrado',
+        data: products,
+        status: 200
+      }
+    } catch (error) {
+      return {
+        message: "❌ Error inesperado al obtener los productos.",
+        error: error.message,
+        status: 500
+      };
+    }
+  }
+
+  //SERVICIO PAR OBTENER TODOS LOS PRODUCOTS
+  static async getAllProducts(userID) {
+    try {
+      if (!userID) {
+        return {
+          message: "⛔ Acceso denegado: debe iniciar sesión para registrar productos.",
+          status: 401
+        }
+      }
+
+      const listProducts = await ProductRepository.getProducts()
+
+      return {
+        message: 'Lista de productos',
+        data: listProducts,
+        status:200,
+      
+       
+      }
+    } catch (error) {
+
+      return {
+        message: "❌ Error inesperado al obtener los productos.",
+        error: error.message,
+        status: 500
+      };
+    }
+  }
 }
 
 export default ProductsService;

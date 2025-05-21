@@ -1,0 +1,101 @@
+/* Estructura principal */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f9fc;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+}
+
+/* Área de contenido */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin-top: 70px; /* Para compensar el header fixed */
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Transición suave para el sidebar */
+.main-container {
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .content-area {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-area {
+        padding: 10px;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content-area {
+        padding: 8px;
+    }
+}/* Estructura principal */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f9fc;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+}
+
+/* Área de contenido */
+.content-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    margin-top: 70px; /* Para compensar el header fixed */
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Transición suave para el sidebar */
+.main-container {
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .content-area {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-area {
+        padding: 10px;
+        margin-top: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content-area {
+        padding: 8px;
+    }
+}

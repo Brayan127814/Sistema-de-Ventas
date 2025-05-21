@@ -1,5 +1,6 @@
 import exress from 'express'
 import connect from './Backend/Confing/config.mjs'
+import cors from 'cors'
 const PORT = process.env.PORT || 4000
 
 import rol from './Backend/Models/rol.models.mjs'
@@ -14,10 +15,11 @@ import productRoutes from './Backend/Routes/ProductsRoutes.mjs'
 const app = exress()
 
 app.use(exress.json())
+app.use(cors())
 
 
 app.use('/usuarios', authRoute)
-app.use('/productos',productRoutes)
+app.use('/productos', productRoutes)
 
 
 //Montar el servidor

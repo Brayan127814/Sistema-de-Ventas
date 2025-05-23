@@ -2,7 +2,7 @@ import Sidebar from "../components/sidebarComponente";
 import ProductServis from "../services/product.services.mjs";
 import React, { useEffect, useState } from "react";
 import "../estilos/fetchProductos.css"; // Importamos los estilos
-
+import { useNavigate } from "react-router-dom";
 function FetchProducts() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,12 +34,18 @@ function FetchProducts() {
             <p>Cargando información...</p>
         </div>
     );
-    
+
     if (error) return <div className="error-message">{error}</div>;
+
+    //Manejo de boton para vender el producto
+
+    const handleVenderClick = async (productoID) => {
+
+    }
 
     return (
         <div className="products-container">
-     
+
             <div className="products-content">
                 <h2 className="products-title">Productos Disponibles</h2>
                 <div className="products-grid">
@@ -52,7 +58,7 @@ function FetchProducts() {
                                         alt={producto.nombre}
                                         className="product-image"
                                         onError={(e) => {
-                                            e.target.onerror = null; 
+                                            e.target.onerror = null;
                                             e.target.src = "https://via.placeholder.com/300x200?text=Imagen+no+disponible";
                                         }}
                                     />
@@ -65,6 +71,10 @@ function FetchProducts() {
                                     <p><span className="info-label">Precio:</span> ${producto.precio}</p>
                                     <p><span className="info-label">Stock:</span> {producto.cantidad_en_stock}</p>
                                     <p><span className="info-label">Categoría:</span> {producto.categoria?.nombre || "Sin categoría"}</p>
+                                </div>
+                                <div className="detail-price">
+                                    <span className="price"> Precio: {producto.precio}</span>
+                                    <button onClick={()=>handleVenderClick(producto.id)} className="button-vender">vender</button>
                                 </div>
                             </div>
                         </div>

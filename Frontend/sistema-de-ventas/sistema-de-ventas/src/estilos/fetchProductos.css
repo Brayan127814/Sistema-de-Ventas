@@ -132,6 +132,31 @@
     margin: 2rem;
     border-left: 4px solid #c53030;
 }
+.detail-price {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+
+}
+
+.button-vender {
+    color: white;
+    background-color: #2b6cb0;
+    border-radius: 5px;
+    border: none;
+
+
+}
+
+.price {
+    color: #2b6cb0;
+
+}
+
+.button-vender:hover {
+    background-color: green;
+    transform: translateZ(15px);
+}
 
 /* Media Queries para responsividad */
 @media (max-width: 768px) {

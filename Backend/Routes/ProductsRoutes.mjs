@@ -7,7 +7,7 @@ const productRoutes = Router()
 //Solo el admin puede registrar un nuevo producto en la base de datos
 productRoutes.post('/create', autenticarToken,validarRol(['admin']), ProductController.productCreate)
 //Obtener productos por categorias (admin y empleado)
-productRoutes.get('categoria/:categoriaID',autenticarToken, validarRol(['admin','empleado']),ProductController.categoriaByID)
+productRoutes.get('/categoria/:categoriaID',autenticarToken, validarRol(['admin','empleado']),ProductController.categoriaByID)
 //Obtener todos los productos (admin y empleados)
 productRoutes.get('/',autenticarToken,validarRol(['admin','empleado']),ProductController.allProducts)
 

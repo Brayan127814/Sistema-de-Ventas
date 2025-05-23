@@ -55,6 +55,37 @@ class ProductServis {
             throw new Error(`Error inesperado ${error.message}`)
         }
     }
+
+    //Obtener productos por categoria
+
+    static async getproductCategoryByID(categoriaID) {
+        const token = localStorage.getItem("token")
+        if (!token) {
+            throw new Error('No has iniciado sesión')
+        }
+
+        try {
+
+            const response = await fetch(`${url}/categoria/${categoriaID}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}))
+                throw new Error(errorData || 'Productos no disponibles')
+            }
+
+            return await response.json()
+
+        } catch (error) {
+            throw new Error(`Error inesperado ${error.message}`)
+        }
+    }
+
 }
 
 export default ProductServis

@@ -5,6 +5,7 @@ import RegistrarProducto from './pages/productForm';
 import Layout from './components/layout';
 import FectchPrducts from './pages/fetchProductos';
 import Sidebar from './components/sidebarComponente';
+import FetchCategory from './pages/fetchCategory';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
 
           <Route path='RegistrarProducto' element={<RegistrarProducto />} />
           <Route path='FectchPrducts' element={<FectchPrducts />} />
+          <Route path='FetchCategory/:categoriaID'element={<FetchCategory></FetchCategory>}></Route>
           {/* Puedes agregar más rutas aquí como: */}
           {/* <Route path='categoria' element={<Categoria />} /> */}
         </Route>

@@ -2,14 +2,15 @@
 .sidebar-container {
   width: 250px;
   height: 100vh;
-  background-color: #2c5282; /* Mismo color que el header pero un tono más oscuro */
+  background-color: #2c5282;
   color: white;
   position: fixed;
   left: 0;
   top: 0;
-  padding-top: 70px; /* Para que no quede detrás del header */
+  padding-top: 70px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 800;
+  overflow-y: auto;
 }
 
 /* Cabecera del sidebar */
@@ -25,14 +26,14 @@
   font-weight: 500;
 }
 
-/* Navegación */
+/* Navegación principal */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
 }
 
-/* Enlaces del menú */
+/* Estilos base para los enlaces */
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -41,10 +42,11 @@
   text-decoration: none;
   transition: all 0.3s ease;
   margin: 0.2rem 0;
+  cursor: pointer;
 }
 
 .sidebar-link:hover {
-  background-color: #2b6cb0; /* Color intermedio entre el sidebar y el header */
+  background-color: #2b6cb0;
   color: white;
 }
 
@@ -63,7 +65,65 @@
   font-size: 0.95rem;
 }
 
-/* Efecto para móviles */
+/* Sección de categorías */
+.sidebar-category-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggle-icon {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.toggle-icon.open {
+  transform: rotate(90deg);
+}
+
+/* Lista de categorías */
+.categories-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.categories-list.show {
+  max-height: 500px; /* Ajusta según la cantidad de categorías */
+}
+
+.category-item {
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.category-item:hover {
+  border-left: 3px solid #ebf4ff;
+}
+
+.category-link {
+  display: block;
+  padding: 0.6rem 1.5rem 0.6rem 3rem;
+  color: #cbd5e0;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.category-link:hover {
+  color: white;
+  background-color: rgba(203, 213, 224, 0.1);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .sidebar-container {
     transform: translateX(-100%);

@@ -173,3 +173,5 @@ Todos los endpoints (excepto login) requieren token JWT
 Algunas funcionalidades son exclusivas para admin
 
 Las fechas deben enviarse en formato YYYY-MM-DD
+
+Brayan

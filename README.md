@@ -1,4 +1,3 @@
-
 🛍️ Sistema de Gestión de Ventas - API
 📋 Tabla de Contenidos
 Descripción General
@@ -12,6 +11,8 @@ Gestión de Productos
 Procesamiento de Ventas
 
 Manejo de Errores
+
+Mejoras Futuras
 
 🌟 Descripción General
 Sistema completo para la gestión interna de ventas en empresas, diseñado para uso exclusivo del personal autorizado.
@@ -27,27 +28,25 @@ Principales características:
 👥 Administración de usuarios
 
 🛠️ Tecnologías Utilizadas
-Backend
 Tecnología	Función
 Node.js	Entorno de ejecución principal
 Express	Framework para el API REST
 MySQL	Base de datos relacional
 Sequelize	ORM para gestión de datos
 JWT	Autenticación por tokens
-Frontend (Mínimo)
-Interfaz básica con React
-
-Estructura HTML/CSS simple
-
-Funcionalidades esenciales en JavaScript
+React	Frontend (interfaz básica mínima)
+HTML/CSS	Estructura y estilos básicos del frontend
+JavaScript	Funcionalidades esenciales en frontend
 
 🔐 Autenticación y Usuarios
 Registro de Nuevos Usuarios
-http
-POST /usuarios/adduser
-Datos requeridos:
+URL: POST /usuarios/adduser
+
+Datos requeridos (JSON):
 
 json
+Copiar
+Editar
 {
   "nombre": "Ejemplo Usuario",
   "email": "usuario@empresa.com",
@@ -56,32 +55,36 @@ json
 }
 Validaciones:
 
-Contraseña con 8+ caracteres, mayúsculas, números y símbolos
+Contraseña con mínimo 8 caracteres, incluyendo mayúsculas, números y símbolos.
 
-Email único en el sistema
+Email único en el sistema.
 
-Todos los campos obligatorios
+Todos los campos son obligatorios.
 
 📦 Gestión de Productos
 Registrar Nuevo Producto
-http
-POST /productos/create
+URL: POST /productos/create
+
 Requisitos:
 
-🔑 Token de administrador válido
+Token válido con rol de administrador.
 
-Estructura del producto:
+Estructura del producto (JSON):
 
 json
+Copiar
+Editar
 {
   "nombre": "Producto Ejemplo",
   "precio": 99.99,
   "stock": 50,
   "categoriaID": 3
 }
-Respuesta exitosa:
+Respuesta exitosa (JSON):
 
 json
+Copiar
+Editar
 {
   "status": 201,
   "data": {
@@ -92,11 +95,13 @@ json
 }
 💰 Procesamiento de Ventas
 Registrar Nueva Venta
-http
-POST /api/ventas
-Datos de venta:
+URL: POST /api/ventas
+
+Datos de venta (JSON):
 
 json
+Copiar
+Editar
 {
   "productos": [
     {"id": 1, "cantidad": 2},
@@ -106,23 +111,25 @@ json
 }
 Flujo del sistema:
 
-Verifica stock disponible
+Verifica que haya stock disponible para cada producto.
 
-Calcula total automáticamente
+Calcula el total automáticamente.
 
-Registra venta y actualiza inventario
+Registra la venta y actualiza el inventario.
 
-Genera comprobante
+Genera el comprobante de venta.
 
 🚨 Manejo de Errores
 Código	Situación	Solución sugerida
 400	Datos inválidos	Verificar formato JSON
 401	No autorizado	Validar token JWT
 404	Recurso no existe	Confirmar IDs
-500	Error servidor	Revisar logs
+500	Error servidor	Revisar logs del servidor
+
 📌 Mejoras Futuras
-Integración con pasarelas de pago
+Integración con pasarelas de pago.
 
-Reportes estadísticos
+Reportes estadísticos.
 
-Dashboard administrativo
+Dashboard administrativo.
+

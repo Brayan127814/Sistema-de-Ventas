@@ -11,6 +11,7 @@ import categoria from './Backend/Models/categoria.model.mjs'
 import './Backend/Models/index.mjs'
 import authRoute from './Backend/Routes/authRoute.mjs'
 import productRoutes from './Backend/Routes/ProductsRoutes.mjs'
+import ventasRouter from './Backend/Routes/ventasRoutes.mjs'
 
 const app = exress()
 
@@ -20,6 +21,7 @@ app.use(cors())
 
 app.use('/usuarios', authRoute)
 app.use('/productos', productRoutes)
+app.use('/ventas',ventasRouter)
 
 
 //Montar el servidor

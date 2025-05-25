@@ -1,5 +1,5 @@
 import connect from "../Confing/config.mjs";
-import { DataTypes, DATE } from "sequelize";
+import { DataTypes} from "sequelize";
 
 const ventas = connect.define("ventas", {
     id: {

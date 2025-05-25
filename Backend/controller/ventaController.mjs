@@ -17,6 +17,22 @@ class VentaController {
             res.status(500).json({ message: "Error interno del servidor", error: error.message });
         }
     }
+
+    static async getyVentas(req, res) {
+        try {
+            const userID = req.user.id
+            const roleName= req.user.roleName
+            const response = await VentasService.getAllventas(userID, roleName)
+            return res.status(response.status).json({
+                message: response.message,
+                data: response.data || null,
+                error: response.error || null
+            })
+        } catch (error) {
+            res.status(500).json({ message: "Error interno del servidor", error: error.message })
+
+        }
+    }
 }
 
 

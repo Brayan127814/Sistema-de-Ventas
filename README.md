@@ -146,16 +146,16 @@ Respuesta exitosa
 * Actualización de productos.
 
 ---
+📝 Registro de Productos
+🔹 Endpoint
+plaintext
+POST http://localhost:5000/productos/create
+🔸 Descripción
+Registra un nuevo producto en la base de datos. Requiere autenticación y rol de administrador (admin).
 
-### 📌 Registro de productos
-
-* **URL:** `http://localhost:5000/productos/create`
-* **Método:** `POST`
-* **Descripción:** Solo los usuarios con rol de **admin** pueden insertar un producto.
-
-#### 🔸 Ejemplo del `body`
-
-```json
+📤 Cuerpo de la Solicitud (Body)
+Ejemplo en JSON
+json
 {
   "nombre": "Auriculares Inalámbricos Bluetooth",
   "descripcion": "Auriculares con cancelación de ruido, micrófono incorporado y estuche de carga.",
@@ -164,11 +164,16 @@ Respuesta exitosa
   "categoriaID": 1,
   "imgProducto": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXVyaWN1bGFyZXMlMjBpbmFsYW1icmljb3N8ZW58MHx8MHx8fDA%3D"
 }
-```
-
-#### ✅ Respuesta exitosa
-
-```json
+📌 Campos Requeridos
+Campo	Tipo	Descripción
+nombre	string	Nombre del producto (no vacío).
+descripcion	string	Detalles del producto.
+precio	number	Precio unitario (mayor que 0).
+cantidad_en_stock	integer	Unidades disponibles (entero positivo).
+categoriaID	integer	ID de la categoría asociada.
+imgProducto	string (URL)	Enlace a la imagen del producto (opcional).
+📥 Respuesta Exitosa (200 OK)
+json
 {
   "message": "✅ Producto registrado correctamente.",
   "data": {
@@ -178,13 +183,21 @@ Respuesta exitosa
     "precio": 59.99,
     "cantidad_en_stock": 120,
     "categoriaID": 1,
-    "imgProducto": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXVyaWN1bGFyZXMlMjBpbmFsYW1icmljb3N8ZW58MHx8MHx8fDA%3D",
-    "updatedAt": "2025-05-18T21:20:33.614Z",
-    "createdAt": "2025-05-18T21:20:33.614Z"
+    "imgProducto": "https://example.com/image.jpg",
+    "createdAt": "2025-05-18T21:20:33.614Z",
+    "updatedAt": "2025-05-18T21:20:33.614Z"
   },
   "error": null
 }
-```
+🚨 Posibles Errores
+Código	Respuesta	Razón
+400	"Faltan campos obligatorios"	Campos vacíos o formato inválido.
+401	"No autorizado (rol no válido)"	Usuario sin permisos de admin.
+500	"Error al crear el producto"	Fallo en el servidor.
+📌 Notas
+Todos los campos son obligatorios excepto imgProducto.
+
+El precio y la cantidad deben ser valores numéricos válidos (ej. 59.99, no "59.99").
 
 ---
 

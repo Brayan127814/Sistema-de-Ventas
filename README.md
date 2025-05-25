@@ -1,175 +1,128 @@
+
 🛍️ Sistema de Gestión de Ventas - API
 📋 Tabla de Contenidos
 Descripción General
 
 Tecnologías Utilizadas
 
-Módulo de Autenticación
+Autenticación y Usuarios
 
-Endpoints de Usuarios
+Gestión de Productos
 
-Módulo de Productos
+Procesamiento de Ventas
 
-Módulo de Ventas
+Manejo de Errores
 
 🌟 Descripción General
-Sistema interno de gestión de ventas para empresas, con:
+Sistema completo para la gestión interna de ventas en empresas, diseñado para uso exclusivo del personal autorizado.
 
-Autenticación segura por roles
+Principales características:
 
-CRUD de productos y categorías
+🔐 Autenticación segura por roles (admin/usuario)
 
-Registro y consulta de ventas
+📦 Gestión completa de productos y categorías
 
-Gestión de usuarios
+💵 Registro y seguimiento de ventas
 
-🔒 Uso exclusivo para personal autorizado
+👥 Administración de usuarios
 
 🛠️ Tecnologías Utilizadas
 Backend
-Tecnología	Uso
-Node.js	Entorno de ejecución
-Express.js	Framework web
+Tecnología	Función
+Node.js	Entorno de ejecución principal
+Express	Framework para el API REST
 MySQL	Base de datos relacional
-Sequelize	ORM para MySQL
+Sequelize	ORM para gestión de datos
 JWT	Autenticación por tokens
-bcrypt	Encriptación de contraseñas
 Frontend (Mínimo)
-HTML/CSS/JavaScript básico
+Interfaz básica con React
 
-React para interfaz administrativa
+Estructura HTML/CSS simple
 
-🔐 Módulo de Autenticación
-Registro de Usuarios
+Funcionalidades esenciales en JavaScript
+
+🔐 Autenticación y Usuarios
+Registro de Nuevos Usuarios
 http
 POST /usuarios/adduser
-Body:
+Datos requeridos:
 
 json
 {
-  "nombre": "Nidia Florez",
-  "cedula": "1007215806",
-  "email": "nidia@gmail.com",
-  "password": "Nidia$1235",
-  "rolID": 1
+  "nombre": "Ejemplo Usuario",
+  "email": "usuario@empresa.com",
+  "password": "ClaveSegura123*",
+  "rolID": 2
 }
 Validaciones:
 
-Contraseña segura (8+ caracteres, mayúsculas, números)
+Contraseña con 8+ caracteres, mayúsculas, números y símbolos
 
-Campos obligatorios
+Email único en el sistema
 
-Email único
+Todos los campos obligatorios
 
-Inicio de Sesión
-http
-POST /usuarios/login
-Body:
-
-json
-{
-  "email": "jesus@gmail.com",
-  "password": "Brayan$1235"
-}
-Respuesta Exitosa:
-
-json
-{
-  "message": "Inicio de sesión exitoso",
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "success": true
-}
-👥 Endpoints de Usuarios
-Consulta de Perfil
-http
-GET /usuarios/profile
-Respuesta:
-
-json
-{
-  "message": "Perfil de usuario",
-  "data": {
-    "id": 1,
-    "nombre": "Brayan Castillo",
-    "email": "jesus@gmail.com",
-    "rol": "admin"
-  }
-}
-📦 Módulo de Productos
-Registrar Producto
+📦 Gestión de Productos
+Registrar Nuevo Producto
 http
 POST /productos/create
 Requisitos:
 
-Rol admin
+🔑 Token de administrador válido
 
-Token válido
-
-Body:
+Estructura del producto:
 
 json
 {
-  "nombre": "Auriculares Bluetooth",
-  "descripcion": "Con cancelación de ruido",
-  "precio": 59.99,
-  "cantidad_en_stock": 120,
-  "categoriaID": 1
+  "nombre": "Producto Ejemplo",
+  "precio": 99.99,
+  "stock": 50,
+  "categoriaID": 3
 }
-Respuesta Exitosa:
+Respuesta exitosa:
 
 json
 {
-  "message": "✅ Producto registrado",
+  "status": 201,
   "data": {
-    "id": 1,
-    "nombre": "Auriculares Bluetooth",
-    "precio": 59.99,
-    "stock": 120
+    "id": 25,
+    "nombre": "Producto Ejemplo",
+    "precio": 99.99
   }
 }
-💰 Módulo de Ventas
-Registrar Venta
+💰 Procesamiento de Ventas
+Registrar Nueva Venta
 http
 POST /api/ventas
-Body:
+Datos de venta:
 
 json
 {
-  "fecha": "2025-05-25",
-  "metodo_pago": "efectivo",
   "productos": [
     {"id": 1, "cantidad": 2},
-    {"id": 5, "cantidad": 1}
-  ]
+    {"id": 3, "cantidad": 1}
+  ],
+  "metodo_pago": "tarjeta"
 }
-Validaciones:
+Flujo del sistema:
 
-Stock disponible
+Verifica stock disponible
 
-Productos existentes
+Calcula total automáticamente
 
-Usuario autenticado
+Registra venta y actualiza inventario
 
-Respuesta Exitosa:
+Genera comprobante
 
-json
-{
-  "message": "Venta registrada",
-  "venta": {
-    "id": 101,
-    "total": 350.00,
-    "fecha": "2025-05-25"
-  }
-}
-🚨 Posibles Errores
-Código	Descripción
-400	Validación fallida
-401	No autorizado
-404	Recurso no encontrado
-500	Error interno del servidor
-📌 Notas Importantes
-Todos los endpoints (excepto login) requieren token JWT
+🚨 Manejo de Errores
+Código	Situación	Solución sugerida
+400	Datos inválidos	Verificar formato JSON
+401	No autorizado	Validar token JWT
+404	Recurso no existe	Confirmar IDs
+500	Error servidor	Revisar logs
+📌 Mejoras Futuras
+Integración con pasarelas de pago
 
-Algunas funcionalidades son exclusivas para admin
+Reportes estadísticos
 
-Las fechas deben enviarse en formato YYYY-MM-DD
+Dashboard administrativo

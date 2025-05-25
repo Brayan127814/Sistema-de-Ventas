@@ -30,17 +30,18 @@ Principales características:
 🛠️ Tecnologías Utilizadas
 Tecnología	Función
 Node.js	Entorno de ejecución principal
-Express	Framework para el API REST
+Express	Framework para API REST
 MySQL	Base de datos relacional
 Sequelize	ORM para gestión de datos
 JWT	Autenticación por tokens
-React	Frontend (interfaz básica mínima)
-HTML/CSS	Estructura y estilos básicos del frontend
-JavaScript	Funcionalidades esenciales en frontend
+React	Frontend básico
+HTML/CSS	Estructura y estilos
+JavaScript	Funcionalidades frontend
 
 🔐 Autenticación y Usuarios
 Registro de Nuevos Usuarios
-URL: POST /usuarios/adduser
+URL:
+POST /usuarios/adduser
 
 Datos requeridos (JSON):
 
@@ -63,7 +64,8 @@ Todos los campos son obligatorios.
 
 📦 Gestión de Productos
 Registrar Nuevo Producto
-URL: POST /productos/create
+URL:
+POST /productos/create
 
 Requisitos:
 
@@ -95,7 +97,8 @@ Editar
 }
 💰 Procesamiento de Ventas
 Registrar Nueva Venta
-URL: POST /api/ventas
+URL:
+POST /api/ventas
 
 Datos de venta (JSON):
 
@@ -104,8 +107,14 @@ Copiar
 Editar
 {
   "productos": [
-    {"id": 1, "cantidad": 2},
-    {"id": 3, "cantidad": 1}
+    {
+      "id": 1,
+      "cantidad": 2
+    },
+    {
+      "id": 3,
+      "cantidad": 1
+    }
   ],
   "metodo_pago": "tarjeta"
 }
@@ -124,7 +133,7 @@ Código	Situación	Solución sugerida
 400	Datos inválidos	Verificar formato JSON
 401	No autorizado	Validar token JWT
 404	Recurso no existe	Confirmar IDs
-500	Error servidor	Revisar logs del servidor
+500	Error servidor	Revisar logs
 
 📌 Mejoras Futuras
 Integración con pasarelas de pago.
@@ -132,4 +141,3 @@ Integración con pasarelas de pago.
 Reportes estadísticos.
 
 Dashboard administrativo.
-

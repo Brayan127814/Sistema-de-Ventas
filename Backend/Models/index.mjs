@@ -4,6 +4,7 @@ import detalle_de_ventas from "./detalleVentas.mjs";
 import ventas from "./ventas.models.venta.mjs";
 import productos from "./productos.models.mjs";
 import categoria from "./categoria.model.mjs";
+import clientes from "./clientes.models.mjs";
 
 /*
  Un rol puede tener muchos usuarios
@@ -71,9 +72,28 @@ productos.hasMany(detalle_de_ventas, {
 
 
 //
-categoria.hasMany(productos,{
-    foreignKey:"categoriaID"
+categoria.hasMany(productos, {
+    foreignKey: "categoriaID"
 })
-productos.belongsTo(categoria,{
-        foreignKey:'categoriaID'
+productos.belongsTo(categoria, {
+    foreignKey: 'categoriaID'
 })
+
+
+/*
+ una venta puede tener solo un cliente
+ un cliente puede tener muchas ventas en este caso
+ muchas compras
+
+*/
+
+// En el modelo de VENTAS
+ventas.belongsTo(clientes, {
+    foreignKey: 'clienteID',
+  
+});
+
+// En el modelo de CLIENTES
+clientes.hasMany(ventas, {
+    foreignKey: 'clienteID',
+});

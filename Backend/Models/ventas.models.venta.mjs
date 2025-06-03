@@ -19,6 +19,10 @@ const ventas = connect.define("ventas", {
     id_usuario: {
         type:DataTypes.INTEGER,
         allowNull:false
+    },
+    clienteID:{
+        type:DataTypes.INTEGER,
+        allowNull: false
     }
 
 

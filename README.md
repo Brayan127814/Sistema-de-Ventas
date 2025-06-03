@@ -1,58 +1,53 @@
-# 🛒 Sistema de Ventas
+## 🛍️ Sistema de Gestión de Ventas - API
 
-Este proyecto es un sistema de ventas desarrollado como una solución interna para una empresa o almacén. Permite a los usuarios de la empresa gestionar productos, clientes y registrar ventas, todo desde una interfaz sencilla y funcional.
+### 📋 Tabla de Contenidos
 
-El sistema no está orientado a usuarios finales ni a compras en línea, sino al uso exclusivo por parte del personal autorizado dentro de la organización.
-
----
-
-## 🚀 Tecnologías utilizadas
-
-### Backend
-- **Node.js** – Entorno de ejecución para JavaScript del lado del servidor.
-- **Express.js** – Framework web minimalista para Node.js.
-- **MySQL** – Sistema de gestión de base de datos relacional.
-- **Sequelize** – ORM para manejar la base de datos.
-- **JWT** – Autenticación basada en tokens.
-- **bcrypt** – Encriptación segura de contraseñas.
-- **dotenv** – Gestión de variables de entorno.
-
-### Frontend (mínimo funcional)
-- **HTML + CSS + JavaScript**
-- **React** – Interfaz básica de inicio de sesión y navegación para usuarios internos.
+1. [Descripción General](#descripción-general)
+2. [Tecnologías Utilizadas](#tecnologías-utilizadas)
+3. [Autenticación y Usuarios](#autenticación-y-usuarios)
+4. [Gestión de Productos](#gestión-de-productos)
+5. [Procesamiento de Ventas](#procesamiento-de-ventas)
+6. [Manejo de Errores](#manejo-de-errores)
+7. [Mejoras Futuras](#mejoras-futuras)
 
 ---
 
-## 🔐 Módulo de Autenticación
+### 🌟 Descripción General
 
-El sistema de autenticación implementado ofrece las siguientes funcionalidades:
+Sistema completo para la gestión interna de ventas en empresas, diseñado para uso exclusivo del personal autorizado.
 
-### ✅ Registro de usuarios
+**Principales características:**
 
-- Validación de campos vacíos.
-- Verificación de seguridad de contraseña: mínimo 8 caracteres, mayúsculas, minúsculas, números y símbolos.
-- Encriptación segura de contraseñas usando bcrypt.
-- Almacenamiento estructurado a través del repositorio `authRepository`.
-
-### 🔑 Inicio de sesión
-
-- Validación de credenciales.
-- Verificación de usuario existente.
-- Comparación de contraseñas.
-- Generación de token JWT válido por 1 hora.
-
-Estas funcionalidades están centralizadas en la clase `AuthService`.
+* 🔐 Autenticación segura por roles (admin/usuario)
+* 📦 Gestión completa de productos y categorías
+* 💵 Registro y seguimiento de ventas
+* 👥 Administración de usuarios
 
 ---
 
-## 📡 Ejemplos de consumo de endpoints
+### 🛠️ Tecnologías Utilizadas
 
-### 1. Registro de Usuario
+| Tecnología | Función                        |
+| ---------- | ------------------------------ |
+| Node.js    | Entorno de ejecución principal |
+| Express    | Framework para API REST        |
+| MySQL      | Base de datos relacional       |
+| Sequelize  | ORM para gestión de datos      |
+| JWT        | Autenticación por tokens       |
+| React      | Frontend básico                |
+| HTML/CSS   | Estructura y estilos           |
+| JavaScript | Funcionalidades frontend       |
 
-**URL:** `http://localhost:5000/usuarios/adduser`  
-**Método:** `POST`  
-**Headers:** `Content-Type: application/json`  
-**Body (JSON):**
+---
+
+### 🔐 Autenticación y Usuarios
+
+#### Registro de Usuario
+
+* **URL:** `POST /usuarios/adduser`
+* **Headers:** `Content-Type: application/json`
+* **Body:**
+
 ```json
 {
   "nombre": "Nidia Florez",
@@ -61,9 +56,11 @@ Estas funcionalidades están centralizadas en la clase `AuthService`.
   "password": "Nidia$1235",
   "rolID": 1
 }
+```
 
---- Respuesta 
+* **Respuesta:**
 
+```json
 {
   "message": "Usuario creado exitosamente",
   "data": {
@@ -71,278 +68,120 @@ Estas funcionalidades están centralizadas en la clase `AuthService`.
     "nombre": "Nidia Florez",
     "cedula": "1007215806",
     "email": "nidia@gmail.com",
-    "password": "$2b$10$lo2V.oTJDWLAuwwka3rAROsc4dGr7bR1VfCseInyPlkEo86qcMvL6",
-    "rolID": 1,
-    "updatedAt": "2025-05-15T02:02:16.922Z",
-    "createdAt": "2025-05-15T02:02:16.922Z"
+    "rolID": 1
   },
   "error": null
 }
+```
 
+#### Inicio de Sesión
 
+* **URL:** `POST /usuarios/login`
+* **Body:**
 
-
-
-
-#### Inicio de sesión
--**URL: ** http://localhost:5000/usuarios/login
- - **Método:** POST
- - **Headers:** Content-Type: application/json
--  **Body (JSON):**
-
-
+```json
 {
   "email": "jesus@gmail.com",
   "password": "Brayan$1235"
 }
-Respuesta exitosa
+```
+
+* **Respuesta:**
+
+```json
 {
   "message": "Inicio de sesión exitoso",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token": "<token JWT>",
   "success": true
 }
+```
 
-# 🛒 Sistema de Ventas - API
+#### Perfil del Usuario
 
-## Endpoints
-
----
-
-### Consulta de perfil de usuario
-
-- **URL:** `http://localhost:5000/usuarios/profile`  
-- **Método:** `GET`  
-- **Descripción:** Obtiene el perfil del usuario que está autenticado.
-
-**Respuesta exitosa:**
-
-```json
-{
-  "message": "Perfil de usuario",
-  "data": {
-    "id": 1,
-    "nombre": "Brayan Castillo",
-    "cedula": "1007515804",
-    "email": "jesus@gmail.com",
-    "estado": "Activo",
-    "rolID": 1,
-    "createdAt": "2025-05-18T20:23:33.000Z",
-    "updatedAt": "2025-05-18T20:23:33.000Z",
-    "rol": {
-      "roleName": "admin"
-    }
-  },
-  "error": null
-}
-## 🧾 Módulo para el Registro de Productos
-
-### Funcionalidades
-
-* Validación de campos para evitar valores vacíos.
-* Registro de producto.
-* Listado de todos los productos.
-* Listado por categorías.
-* Actualización de productos.
+* **URL:** `GET /usuarios/profile`
+* **Requiere Token:** Sí (Authorization)
 
 ---
 
-### 📌 Registro de productos
+### 📦 Gestión de Productos
 
-* **URL:** `http://localhost:5000/productos/create`
-* **Método:** `POST`
-* **Descripción:** Solo los usuarios con rol de **admin** pueden insertar un producto.
+#### Registro de Producto
 
-#### 🔸 Ejemplo del `body`
+* **URL:** `POST /productos/create`
+* **Requiere Token Admin:** Sí
+* **Body:**
 
 ```json
 {
-  "nombre": "Auriculares Inalámbricos Bluetooth",
-  "descripcion": "Auriculares con cancelación de ruido, micrófono incorporado y estuche de carga.",
+  "nombre": "Auriculares",
+  "descripcion": "Con cancelación de ruido",
   "precio": 59.99,
-  "cantidad_en_stock": 120,
+  "cantidad_en_stock": 100,
   "categoriaID": 1,
-  "imgProducto": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXVyaWN1bGFyZXMlMjBpbmFsYW1icmljb3N8ZW58MHx8MHx8fDA%3D"
+  "imgProducto": "https://..."
 }
 ```
 
-#### ✅ Respuesta exitosa
+* **Respuesta:**
 
 ```json
 {
-  "message": "✅ Producto registrado correctamente.",
-  "data": {
-    "id": 1,
-    "nombre": "Auriculares Inalámbricos Bluetooth",
-    "descripcion": "Auriculares con cancelación de ruido, micrófono incorporado y estuche de carga.",
-    "precio": 59.99,
-    "cantidad_en_stock": 120,
-    "categoriaID": 1,
-    "imgProducto": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXVyaWN1bGFyZXMlMjBpbmFsYW1icmljb3N8ZW58MHx8MHx8fDA%3D",
-    "updatedAt": "2025-05-18T21:20:33.614Z",
-    "createdAt": "2025-05-18T21:20:33.614Z"
-  },
+  "message": "Producto registrado correctamente.",
+  "data": { ... },
   "error": null
 }
 ```
 
 ---
 
-## 📦 Endpoint: Registrar una Venta
+### 💰 Procesamiento de Ventas
 
-### URL
+#### Registrar Nueva Venta
 
-```
-POST /api/ventas
-```
-
-### 🧾 Descripción
-
-Este endpoint permite registrar una nueva venta realizada por un usuario autenticado. Se valida que haya productos en stock, se calcula el total, se registran los detalles de la venta y se actualiza el stock de los productos.
-
----
-
-### 🧑‍💻 Requiere Autenticación
-
-Sí (por ejemplo, JWT Token en el header `Authorization`)
-
----
-
-### 🔸 Campos requeridos en el `body`
+* **URL:** `POST /api/ventas`
+* **Body:**
 
 ```json
 {
-  "fecha": "2025-05-25",
-  "metodo_pago": "efectivo",
   "productos": [
     { "id": 1, "cantidad": 2 },
-    { "id": 5, "cantidad": 1 }
-  ]
+    { "id": 3, "cantidad": 1 }
+  ],
+  "metodo_pago": "tarjeta"
 }
 ```
 
-> 📌 **productos**: es un array de objetos, donde cada objeto representa un producto con los siguientes campos:
->
-> * `id`: ID del producto.
-> * `cantidad`: cantidad del producto a vender.
+* **Flujo del sistema:**
+
+  * Verifica stock disponible
+  * Calcula total automáticamente
+  * Registra la venta y detalles
+  * Actualiza inventario
+
+#### Listar Ventas
+
+* **URL:** `GET /api/ventas`
+* **Parámetros opcionales:** `page`, `pageSize`
+* **Lógica de permisos:**
+
+  * Admin: todas las ventas
+  * Usuario: solo sus ventas
 
 ---
 
-### 📋 Validaciones
+### 🚨 Manejo de Errores
 
-* El usuario debe estar autenticado.
-* Todos los campos obligatorios deben estar presentes (`fecha`, `metodo_pago`, etc.).
-* La lista de productos debe incluir al menos un producto.
-* Cada producto debe existir y tener stock suficiente.
-* No se permite una cantidad igual o menor a cero.
-
----
-
-### ✅ Ejemplo de respuesta exitosa
-
-```json
-{
-  "message": "Venta registrada exitosamente",
-  "status": 201,
-  "venta": {
-    "id": 101,
-    "fecha": "2025-05-25",
-    "total": 350.00,
-    "id_usuario": 10
-  }
-}
-```
+| Código | Situación         | Solución Sugerida      |
+| ------ | ----------------- | ---------------------- |
+| 400    | Datos inválidos   | Verificar formato JSON |
+| 401    | No autorizado     | Validar token JWT      |
+| 404    | Recurso no existe | Confirmar IDs          |
+| 500    | Error servidor    | Revisar logs           |
 
 ---
 
-### ⚠️ Posibles errores
+### 📌 Mejoras Futuras
 
-| Código | Descripción                                 |
-| ------ | ------------------------------------------- |
-| 401    | Usuario no autenticado o campos inválidos   |
-| 404    | Producto no encontrado                      |
-| 400    | Stock insuficiente para uno o más productos |
-| 500    | Error interno del servidor                  |
-
----
-
-### 🔄 Acciones del backend
-
-* Valida autenticación del usuario.
-* Valida campos requeridos.
-* Calcula el total de la venta.
-* Registra la venta en la tabla `ventas`.
-* Registra los detalles en `detalle_ventas`.
-* Actualiza el stock de los productos vendidos.
-
----
-
-## 📄 Endpoint: Listar Ventas
-
-### URL
-
-```
-GET /api/ventas
-```
-
-### 🧾 Descripción
-
-Este endpoint devuelve una lista paginada de ventas. Si el usuario tiene el rol de `admin`, verá todas las ventas del sistema. Si no, solo verá las ventas asociadas a su cuenta.
-
-### 🧑‍💻 Requiere Autenticación
-
-Sí (JWT en el header `Authorization`)
-
-### 🔸 Parámetros opcionales (query)
-
-* `page`: Número de página (por defecto: 1)
-* `pageSize`: Cantidad de resultados por página (por defecto: 10)
-
-### ✅ Ejemplo de respuesta exitosa (usuario con ventas)
-
-```json
-{
-  "message": "Listado de ventas",
-  "data": {
-    "totalVentas": 5,
-    "totalPaginas": 1,
-    "paginaActual": 1,
-    "ventas": [
-      {
-        "total": 200.0,
-        "detalle_de_ventas": [
-          {
-            "cantidad": 2,
-            "producto": {
-              "nombre": "Teclado Mecánico",
-              "precio": 100.0
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "error": null
-}
-```
-
-### ✅ Ejemplo de respuesta exitosa (sin ventas encontradas)
-
-```json
-{
-  "message": "Listado de ventas",
-  "data": {
-    "totalVentas": 0,
-    "totalPaginas": 0,
-    "paginaActual": 1,
-    "ventas": []
-  },
-  "error": null
-}
-```
-
----
-
-### 🔄 Lógica de permisos
-
-* Si el usuario tiene `roleName === "admin"`, el backend mostrará todas las ventas (`whereClause = {}`).
-* Si el usuario tiene otro rol, solo podrá ver sus propias ventas (`whereClause = { id_usuario: userID }`).
+* Integración con pasarelas de pago
+* Reportes estadísticos
+* Dashboard administrativo

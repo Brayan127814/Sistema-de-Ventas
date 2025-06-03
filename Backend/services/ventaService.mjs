@@ -2,6 +2,7 @@ import validateFields from "../utils/validarCampos.mjs";
 import ventas from "../Models/ventas.models.venta.mjs";
 import productos from "../Models/productos.models.mjs";
 import detalle_de_ventas from "../Models/detalleVentas.mjs";
+import VentasRepository from "../Repositories/ventasRepository.mjs";
 
 class VentasService {
     static async addVenta(userID, data, requiredFields, products) {
@@ -60,9 +61,9 @@ class VentasService {
             }
 
             //CREAR LA VENTA
-            const newVenta = await ventas.create({
+            const newVenta = await VentasRepository.addVenta({
                 ...data,
-                total: total,
+                total: total.toFixed(2),
                 id_usuario: userID
 
             })
@@ -98,6 +99,34 @@ class VentasService {
                 message: 'Error interno del servidor',
                 status: 500
             }
+        }
+    }
+
+    //SERVICIO PARA BUSCAR TODAS LAS VENTAS
+
+    static async getAllventas(userID,roleName) {
+        try {
+            //Validar que el eser esté logueado
+            if (!userID) {
+                return {
+                    message: 'Debes ingresar al sistema',
+                    status: 401
+                }
+            }
+
+            const ventasAll = await VentasRepository.allVentas(userID,roleName)
+            return {
+                message: 'Listado de ventas',
+                data: ventasAll,
+                status: 200
+            }
+        } catch (error) {
+            console.error('Error en addVenta:', error);
+            return {
+                message: 'Error interno del servidor',
+                status: 500
+            }
+
         }
     }
 }

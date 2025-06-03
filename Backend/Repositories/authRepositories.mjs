@@ -19,7 +19,11 @@ class authRepository {
     static async getLoginEmail(email) {
         try {
             const response = await usuarios.findOne({
-                where: { email }
+                where: { email },
+                include:{
+                    model:rol,
+                    attributes:["roleName"]
+                }
             })
 
             return response

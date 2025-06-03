@@ -1,143 +1,139 @@
 🛍️ Sistema de Gestión de Ventas - API
-📋 Tabla de Contenidos
-Descripción General
+Documentación Completa en README.md
 
-Tecnologías Utilizadas
+markdown
+# 🚀 API de Sistema de Ventas
 
-Autenticación y Usuarios
-
-Gestión de Productos
-
-Procesamiento de Ventas
-
-Manejo de Errores
-
-Mejoras Futuras
-
-🌟 Descripción General
-Sistema completo para la gestión interna de ventas en empresas, diseñado para uso exclusivo del personal autorizado.
-
-Principales características:
-
-🔐 Autenticación segura por roles (admin/usuario)
-
-📦 Gestión completa de productos y categorías
-
-💵 Registro y seguimiento de ventas
-
-👥 Administración de usuarios
-
-🛠️ Tecnologías Utilizadas
-Tecnología	Función
-Node.js	Entorno de ejecución principal
-Express	Framework para API REST
-MySQL	Base de datos relacional
-Sequelize	ORM para gestión de datos
-JWT	Autenticación por tokens
-React	Frontend básico
-HTML/CSS	Estructura y estilos
-JavaScript	Funcionalidades frontend
-
-🔐 Autenticación y Usuarios
-Registro de Nuevos Usuarios
-URL:
-POST /usuarios/adduser
-
-Datos requeridos (JSON):
+## 🔐 Autenticación
+Todos los endpoints (excepto `/usuarios/login`) requieren:
+```http
+Authorization: Bearer <token_jwt>
+📚 Endpoints
+👥 Usuarios
+POST /usuarios/adduser - Registrar usuario
+Roles permitidos: admin
+Request:
 
 json
-Copiar
-Editar
 {
-  "nombre": "Ejemplo Usuario",
-  "email": "usuario@empresa.com",
-  "password": "ClaveSegura123*",
-  "rolID": 2
+  "nombre": "Nidia Florez",
+  "cedula": "1007215806",
+  "email": "nidia@gmail.com",
+  "password": "Nidia$1235",
+  "rolID": 1
 }
-Validaciones:
-
-Contraseña con mínimo 8 caracteres, incluyendo mayúsculas, números y símbolos.
-
-Email único en el sistema.
-
-Todos los campos son obligatorios.
-
-📦 Gestión de Productos
-Registrar Nuevo Producto
-URL:
-POST /productos/create
-
-Requisitos:
-
-Token válido con rol de administrador.
-
-Estructura del producto (JSON):
+Respuesta (201):
 
 json
-Copiar
-Editar
 {
-  "nombre": "Producto Ejemplo",
-  "precio": 99.99,
-  "stock": 50,
-  "categoriaID": 3
-}
-Respuesta exitosa (JSON):
-
-json
-Copiar
-Editar
-{
-  "status": 201,
+  "message": "Usuario creado exitosamente",
   "data": {
-    "id": 25,
-    "nombre": "Producto Ejemplo",
-    "precio": 99.99
+    "id": 3,
+    "nombre": "Nidia Florez",
+    "email": "nidia@gmail.com"
   }
 }
-💰 Procesamiento de Ventas
-Registrar Nueva Venta
-URL:
-POST /api/ventas
-
-Datos de venta (JSON):
+POST /usuarios/login - Iniciar sesión
+Request:
 
 json
-Copiar
-Editar
+{
+  "email": "jesus@gmail.com",
+  "password": "Brayan$1235"
+}
+Respuesta (200):
+
+json
+{
+  "message": "Inicio de sesión exitoso",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+📦 Productos
+POST /productos/create - Crear producto
+Roles permitidos: admin
+Request:
+
+json
+{
+  "nombre": "Auriculares Bluetooth",
+  "precio": 59.99,
+  "cantidad_en_stock": 120,
+  "categoriaID": 1
+}
+Respuesta (201):
+
+json
+{
+  "message": "Producto registrado correctamente",
+  "data": {
+    "id": 1,
+    "nombre": "Auriculares Bluetooth"
+  }
+}
+💰 Ventas
+POST /api/ventas - Registrar venta
+Request:
+
+json
 {
   "productos": [
-    {
-      "id": 1,
-      "cantidad": 2
-    },
-    {
-      "id": 3,
-      "cantidad": 1
-    }
-  ],
-  "metodo_pago": "tarjeta"
+    {"id": 1, "cantidad": 2}
+  ]
 }
-Flujo del sistema:
+Respuesta (201):
 
-Verifica que haya stock disponible para cada producto.
+json
+{
+  "message": "Venta registrada",
+  "data": {
+    "total": 119.98,
+    "detalle": [
+      {
+        "producto": "Auriculares Bluetooth",
+        "cantidad": 2
+      }
+    ]
+  }
+}
+GET /api/ventas - Listar ventas
+Parámetros:
 
-Calcula el total automáticamente.
+page (default: 1)
 
-Registra la venta y actualiza el inventario.
+pageSize (default: 10)
 
-Genera el comprobante de venta.
+Respuesta (200):
 
+json
+{
+  "message": "Listado de ventas",
+  "data": {
+    "totalVentas": 5,
+    "ventas": [
+      {
+        "total": 119.98,
+        "detalle_de_ventas": [
+          {
+            "producto": "Auriculares Bluetooth",
+            "cantidad": 2
+          }
+        ]
+      }
+    ]
+  }
+}
 🚨 Manejo de Errores
-Código	Situación	Solución sugerida
-400	Datos inválidos	Verificar formato JSON
-401	No autorizado	Validar token JWT
-404	Recurso no existe	Confirmar IDs
-500	Error servidor	Revisar logs
+Código	Situación	Ejemplo de respuesta
+400	Validación fallida	{"error": "Campos inválidos"}
+401	No autenticado	{"error": "Token requerido"}
+403	Permisos insuficientes	{"error": "Acceso denegado"}
+404	Recurso no encontrado	{"error": "Producto no existe"}
+💻 Ejecución Local
+bash
+# Instalar dependencias
+npm install
 
-📌 Mejoras Futuras
-Integración con pasarelas de pago.
-
-Reportes estadísticos.
-
-Dashboard administrativo.
+# Iniciar servidor
+npm start
+Accede a la documentación interactiva:
+http://localhost:5000/api-docs

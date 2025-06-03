@@ -84,7 +84,7 @@ class AuthService {
 
             //Generar TOken
 
-            const token = jwt.sign({ id: user.id }, process.env.secretKey, { expiresIn: "1h" })
+            const token = jwt.sign({ id: user.id,roleName:user.rol.roleName }, process.env.secretKey, { expiresIn: "1h" })
 
             return {
                 message: "Inicio de sesión exitoso",

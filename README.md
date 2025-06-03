@@ -19,6 +19,7 @@ Sistema completo para la gestión interna de ventas en empresas, diseñado para 
 **Principales características:**
 
 * 🔐 Autenticación segura por roles (admin/usuario)
+*     Gestión de clientes para temas de facturas
 * 📦 Gestión completa de productos y categorías
 * 💵 Registro y seguimiento de ventas
 * 👥 Administración de usuarios
@@ -185,3 +186,7 @@ Sistema completo para la gestión interna de ventas en empresas, diseñado para 
 * Integración con pasarelas de pago
 * Reportes estadísticos
 * Dashboard administrativo
+
+
+### sigamos 
+* ***okey okey***

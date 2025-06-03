@@ -1,20 +1,54 @@
-🛍️ Sistema de Gestión de Ventas - API
-Documentación Completa en README.md
+## 🛍️ Sistema de Gestión de Ventas - API
 
-markdown
-# 🚀 API de Sistema de Ventas
+### 📋 Tabla de Contenidos
 
-## 🔐 Autenticación
-Todos los endpoints (excepto `/usuarios/login`) requieren:
-```http
-Authorization: Bearer <token_jwt>
-📚 Endpoints
-👥 Usuarios
-POST /usuarios/adduser - Registrar usuario
-Roles permitidos: admin
-Request:
+1. [Descripción General](#descripción-general)
+2. [Tecnologías Utilizadas](#tecnologías-utilizadas)
+3. [Autenticación y Usuarios](#autenticación-y-usuarios)
+4. [Gestión de Productos](#gestión-de-productos)
+5. [Procesamiento de Ventas](#procesamiento-de-ventas)
+6. [Manejo de Errores](#manejo-de-errores)
+7. [Mejoras Futuras](#mejoras-futuras)
 
-json
+---
+
+### 🌟 Descripción General
+
+Sistema completo para la gestión interna de ventas en empresas, diseñado para uso exclusivo del personal autorizado.
+
+**Principales características:**
+
+* 🔐 Autenticación segura por roles (admin/usuario)
+* 📦 Gestión completa de productos y categorías
+* 💵 Registro y seguimiento de ventas
+* 👥 Administración de usuarios
+
+---
+
+### 🛠️ Tecnologías Utilizadas
+
+| Tecnología | Función                        |
+| ---------- | ------------------------------ |
+| Node.js    | Entorno de ejecución principal |
+| Express    | Framework para API REST        |
+| MySQL      | Base de datos relacional       |
+| Sequelize  | ORM para gestión de datos      |
+| JWT        | Autenticación por tokens       |
+| React      | Frontend básico                |
+| HTML/CSS   | Estructura y estilos           |
+| JavaScript | Funcionalidades frontend       |
+
+---
+
+### 🔐 Autenticación y Usuarios
+
+#### Registro de Usuario
+
+* **URL:** `POST /usuarios/adduser`
+* **Headers:** `Content-Type: application/json`
+* **Body:**
+
+```json
 {
   "nombre": "Nidia Florez",
   "cedula": "1007215806",
@@ -22,118 +56,132 @@ json
   "password": "Nidia$1235",
   "rolID": 1
 }
-Respuesta (201):
+```
 
-json
+* **Respuesta:**
+
+```json
 {
   "message": "Usuario creado exitosamente",
   "data": {
     "id": 3,
     "nombre": "Nidia Florez",
-    "email": "nidia@gmail.com"
-  }
+    "cedula": "1007215806",
+    "email": "nidia@gmail.com",
+    "rolID": 1
+  },
+  "error": null
 }
-POST /usuarios/login - Iniciar sesión
-Request:
+```
 
-json
+#### Inicio de Sesión
+
+* **URL:** `POST /usuarios/login`
+* **Body:**
+
+```json
 {
   "email": "jesus@gmail.com",
   "password": "Brayan$1235"
 }
-Respuesta (200):
+```
 
-json
+* **Respuesta:**
+
+```json
 {
   "message": "Inicio de sesión exitoso",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "token": "<token JWT>",
+  "success": true
 }
-📦 Productos
-POST /productos/create - Crear producto
-Roles permitidos: admin
-Request:
+```
 
-json
+#### Perfil del Usuario
+
+* **URL:** `GET /usuarios/profile`
+* **Requiere Token:** Sí (Authorization)
+
+---
+
+### 📦 Gestión de Productos
+
+#### Registro de Producto
+
+* **URL:** `POST /productos/create`
+* **Requiere Token Admin:** Sí
+* **Body:**
+
+```json
 {
-  "nombre": "Auriculares Bluetooth",
+  "nombre": "Auriculares",
+  "descripcion": "Con cancelación de ruido",
   "precio": 59.99,
-  "cantidad_en_stock": 120,
-  "categoriaID": 1
+  "cantidad_en_stock": 100,
+  "categoriaID": 1,
+  "imgProducto": "https://..."
 }
-Respuesta (201):
+```
 
-json
+* **Respuesta:**
+
+```json
 {
-  "message": "Producto registrado correctamente",
-  "data": {
-    "id": 1,
-    "nombre": "Auriculares Bluetooth"
-  }
+  "message": "Producto registrado correctamente.",
+  "data": { ... },
+  "error": null
 }
-💰 Ventas
-POST /api/ventas - Registrar venta
-Request:
+```
 
-json
+---
+
+### 💰 Procesamiento de Ventas
+
+#### Registrar Nueva Venta
+
+* **URL:** `POST /api/ventas`
+* **Body:**
+
+```json
 {
   "productos": [
-    {"id": 1, "cantidad": 2}
-  ]
+    { "id": 1, "cantidad": 2 },
+    { "id": 3, "cantidad": 1 }
+  ],
+  "metodo_pago": "tarjeta"
 }
-Respuesta (201):
+```
 
-json
-{
-  "message": "Venta registrada",
-  "data": {
-    "total": 119.98,
-    "detalle": [
-      {
-        "producto": "Auriculares Bluetooth",
-        "cantidad": 2
-      }
-    ]
-  }
-}
-GET /api/ventas - Listar ventas
-Parámetros:
+* **Flujo del sistema:**
 
-page (default: 1)
+  * Verifica stock disponible
+  * Calcula total automáticamente
+  * Registra la venta y detalles
+  * Actualiza inventario
 
-pageSize (default: 10)
+#### Listar Ventas
 
-Respuesta (200):
+* **URL:** `GET /api/ventas`
+* **Parámetros opcionales:** `page`, `pageSize`
+* **Lógica de permisos:**
 
-json
-{
-  "message": "Listado de ventas",
-  "data": {
-    "totalVentas": 5,
-    "ventas": [
-      {
-        "total": 119.98,
-        "detalle_de_ventas": [
-          {
-            "producto": "Auriculares Bluetooth",
-            "cantidad": 2
-          }
-        ]
-      }
-    ]
-  }
-}
-🚨 Manejo de Errores
-Código	Situación	Ejemplo de respuesta
-400	Validación fallida	{"error": "Campos inválidos"}
-401	No autenticado	{"error": "Token requerido"}
-403	Permisos insuficientes	{"error": "Acceso denegado"}
-404	Recurso no encontrado	{"error": "Producto no existe"}
-💻 Ejecución Local
-bash
-# Instalar dependencias
-npm install
+  * Admin: todas las ventas
+  * Usuario: solo sus ventas
 
-# Iniciar servidor
-npm start
-Accede a la documentación interactiva:
-http://localhost:5000/api-docs
+---
+
+### 🚨 Manejo de Errores
+
+| Código | Situación         | Solución Sugerida      |
+| ------ | ----------------- | ---------------------- |
+| 400    | Datos inválidos   | Verificar formato JSON |
+| 401    | No autorizado     | Validar token JWT      |
+| 404    | Recurso no existe | Confirmar IDs          |
+| 500    | Error servidor    | Revisar logs           |
+
+---
+
+### 📌 Mejoras Futuras
+
+* Integración con pasarelas de pago
+* Reportes estadísticos
+* Dashboard administrativo
